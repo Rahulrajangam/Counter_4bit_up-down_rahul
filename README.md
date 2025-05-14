@@ -53,13 +53,20 @@ Functional Simulation:
 
 ### Verilog code for 4-Bit Up-Down Counter:
 
-*/Program  for  4-Bit Up-Down Counter
-module up_down_counter (
-    input wire clk,        // Clock input
-    input wire reset,      // Asynchronous reset
-    input wire up_down,    // Control signal: 1 = count up, 0 = count down
-    output reg [3:0] count // 4-bit counter output
-);
+`timescale 1ns / 1 ns
+module counter(clk,m,rst,count);
+input clk,m,rst;
+output reg [3:0] count;
+always@(posedge clk or negedge rst)
+begin
+if (!rst)
+count=0;
+else if(m)
+count=count+1;
+else
+count=count-1;
+end
+endmodule
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
