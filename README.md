@@ -68,20 +68,6 @@ count=count-1;
 end
 endmodule
 
-always @(posedge clk or posedge reset) begin
-    if (reset) begin
-        count <= 4'b0000; // Reset the counter
-    end else begin
-        if (up_down) begin
-            count <= count + 1; // Count up
-        end else begin
-            count <= count - 1; // Count down
-        end
-    end
-end
-
-endmodule
-
 	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Creating Test bench:
