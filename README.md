@@ -75,28 +75,35 @@ endmodule
 	Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.vhdl to open a new blank document (4bitup_down_count_tb.v).
 
 ### Test-bench code for 4-Bit Up-Down Counter:
-
-*/Test bench Program  for  4-Bit Up-Down Counter
-module up_down_counter (
-    input wire clk,        // Clock input
-    input wire reset,      // Asynchronous reset
-    input wire up_down,    // Control signal: 1 = count up, 0 = count down
-    output reg [3:0] count // 4-bit counter output
-);
-
-always @(posedge clk or posedge reset) begin
-    if (reset) begin
-        count <= 4'b0000; // Reset the counter
-    end else begin
-        if (up_down) begin
-            count <= count + 1; // Count up
-        end else begin
-            count <= count - 1; // Count down
-        end
-    end
+```
+`timescale 1ns / 1ns
+module counter_test;
+reg clk,rst,m;
+wire [3:0] count;
+initial
+begin
+clk=0;
+rst=0;#5;
+rst=1;
+end
+initial
+begin
+m=1;
+#160 m=0;
 end
 
+counter counter1 (clk,m,rst, count);
+
+always #5 clk=~clk;
+
+initial $monitor("Time=%t rst=%b clk=%b count=%b" , $time,rst,clk,count);
+
+initial
+#320 $finish;
+
 endmodule
+```
+
 ### To Launch Simulation tool
 	linux:/> nclaunch -new&            // “-new” option is used for invoking NCVERILOG for the first time for any design
 
